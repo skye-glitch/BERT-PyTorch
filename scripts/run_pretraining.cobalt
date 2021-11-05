@@ -1,20 +1,21 @@
 #!/bin/bash
-#COBALT -t 720 
-#COBALT -n 1
+#COBALT -t 360
+#COBALT -n 4
 #COBALT -q full-node
 #COBALT -A SuperBERT
 #COBALT -O cobalt_logs/job
 #COBALT --attrs enable_ssh=1
+#COBALT -M sikanli@utexas.edu
 
 # Change to 2 for Phase 2 training
 PHASE=1
 
 if [[ "$PHASE" -eq 1 ]]; then
-	CONFIG=config/bert_pretraining_phase1_config.json
-	DATA=/lus/theta-fs0/projects/SuperBERT/datasets/encoded/bert_masked_wikicorpus_en/phase1
+	CONFIG=config/bert_kfac_pretraining_phase1_config.json
+	DATA=/lus/theta-fs0/projects/SuperBERT/jgpaul/datasets/encoded/bert_masked_wikicorpus_en/phase1
 else
 	CONFIG=config/bert_pretraining_phase2_config.json
-	DATA=/lus/theta-fs0/projects/SuperBERT/datasets/encoded/bert_masked_wikicorpus_en/phase2
+	DATA=/lus/theta-fs0/projects/SuperBERT/jgpaul/ddatasets/encoded/bert_masked_wikicorpus_en/phase2
 fi
 
 OUTPUT_DIR=results/bert_large_uncased_pretraining

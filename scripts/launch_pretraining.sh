@@ -49,7 +49,8 @@ done
 . /etc/profile
 
 source /lus/theta-fs0/software/thetagpu/conda/2021-06-28/mconda3/setup.sh
-conda activate bert-pytorch
+#conda activate bert-pytorch
+conda activate torch-1.9
 
 if [[ -z "$LOCAL_RANK" ]]; then
     if [[ -z "${OMPI_COMM_WORLD_RANK}" ]]; then

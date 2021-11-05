@@ -93,7 +93,7 @@ def parse_arguments():
                         help='Disable tqdm progress bar')
     parser.add_argument('--num_steps_per_checkpoint', type=int, default=200,
                         help="Number of update steps between writing checkpoints.")
-    parser.add_argument('--skip_checkpoint', default=False, action='store_true',
+    parser.add_argument('--skip_checkpoint', default=True, action='store_true',
                         help="Whether to save checkpoints")
     parser.add_argument('--checkpoint_activations', default=False, action='store_true',
                         help="Whether to use gradient checkpointing")
@@ -139,7 +139,8 @@ def parse_arguments():
     parser.add_argument('--kfac_kl_clip', type=float, default=0.001,
                         help='KFAC KL gradient clip')
     parser.add_argument('--kfac_skip_layers', nargs='+', type=str, 
-                        default=['BertLMPredictionHead', 'embedding'],
+                        #default=['BertLMPredictionHead', 'embedding'],
+                        default = ['BertLMPredictionHead'],
                         help='Modules to ignore registering with KFAC '
                              '(default: [BertLMPredictionHead, embedding])')
 
@@ -324,7 +325,7 @@ def prepare_optimizers(args, model, checkpoint, global_steps):
             # communication. Optimize for memory instead.
             comm_method=kfac.CommMethod.HYBRID_OPT,
             grad_worker_fraction=0.5,
-            inv_dtype=torch.float16,
+            inv_dtype=torch.float32,
             # Compute the factors and update the running averages during the
             # forward backward pass b/c we are using grad accumulation but
             # not accumulating the input/output data
